@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+  <!-- Background Circle -->
+  <circle cx="50" cy="50" r="48" fill="white" stroke="#0078D4" stroke-width="2"/>
+  
+  <!-- Wave Elements -->
+  <path d="M20,40 C30,30 40,50 50,40 C60,30 70,50 80,40" 
+        fill="none" 
+        stroke="#0078D4" 
+        stroke-width="5"
+        stroke-linecap="round"/>
+  
+  <path d="M20,55 C30,45 40,65 50,55 C60,45 70,65 80,55" 
+        fill="none" 
+        stroke="#106EBE" 
+        stroke-width="5"
+        stroke-linecap="round"/>
+        
+  <path d="M20,70 C30,60 40,80 50,70 C60,60 70,80 80,70" 
+        fill="none" 
+        stroke="#0078D4" 
+        stroke-width="5"
+        stroke-linecap="round"
+        stroke-opacity="0.7"/>
+</svg>

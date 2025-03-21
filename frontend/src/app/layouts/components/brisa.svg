@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 60">
+  <!-- Background -->
+  <rect width="200" height="60" fill="#ffffff" rx="3" ry="3"/>
+  
+  <!-- Wave Element (Small) -->
+  <g transform="translate(10, 22) scale(0.3)">
+    <path d="M10,40 C30,20 50,60 70,40 C90,20 110,60 130,40" 
+          fill="none" 
+          stroke="#0078D4" 
+          stroke-width="12"
+          stroke-linecap="round"/>
+    
+    <path d="M10,70 C30,50 50,90 70,70 C90,50 110,90 130,70" 
+          fill="none" 
+          stroke="#106EBE" 
+          stroke-width="12"
+          stroke-linecap="round"/>
+  </g>
+  
+  <!-- Logo Text -->
+  <text x="70" y="38" 
+        font-family="Segoe UI, Arial, sans-serif" 
+        font-weight="bold"
+        font-size="24" 
+        fill="#0078D4">
+    Brisa
+  </text>
+</svg>
