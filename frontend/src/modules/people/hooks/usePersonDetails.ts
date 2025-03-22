@@ -1,9 +1,10 @@
 // frontend/src/modules/people/hooks/usePersonDetails.ts
 import { useState, useEffect, useCallback } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { peopleService } from '../services/peopleService';
 import { Person, PersonFormData } from '../types';
 
-interface UsePersonDetailsResult {
+export interface UsePersonDetailsResult {
 person: Person | null;
 loading: boolean;
 error: Error | null;
@@ -11,12 +12,19 @@ fetchPerson: (id: string) => Promise<Person | null>;
   createPerson: (data: PersonFormData) => Promise<Person | null>;
   updatePerson: (id: string, data: Partial<PersonFormData>) => Promise<Person | null>;
   deletePerson: (id: string) => Promise<boolean>;
+  openPersonDetails: (id: string) => void;
 }
 
 export const usePersonDetails = (id?: string): UsePersonDetailsResult => {
+  const navigate = useNavigate();
   const [person, setPerson] = useState<Person | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<Error | null>(null);
+
+  // Open person details page
+  const openPersonDetails = useCallback((personId: string) => {
+    navigate(`/people/${personId}`);
+  }, [navigate]);
 
   // Fetch person by ID
   const fetchPerson = useCallback(async (personId: string) => {
@@ -124,7 +132,8 @@ export const usePersonDetails = (id?: string): UsePersonDetailsResult => {
     fetchPerson,
     createPerson,
     updatePerson,
-    deletePerson
+    deletePerson,
+    openPersonDetails
   };
 };
 

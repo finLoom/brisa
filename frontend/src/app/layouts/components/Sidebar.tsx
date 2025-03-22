@@ -191,6 +191,30 @@ const Sidebar: React.FC<SidebarProps> = ({ collapsed }) => {
             }
           ]
         },
+
+        {
+          name: 'Demo',
+          url: '/demo',
+          key: 'demo',
+          iconProps: {
+            iconName: 'Money',
+            styles: { root: { color: '#333', fontSize: '16px' } }
+          },
+          isExpanded: location.pathname.startsWith('/demo'),
+          links: [
+            {
+              name: 'Data Grid',
+              url: '/data-grid',
+              key: 'dataGrid',
+              iconProps: {
+                iconName: 'Table',
+                styles: { root: { color: '#333', fontSize: '16px' } }
+              }
+            }
+          ]
+        },
+
+
         {
           name: 'Reports',
           url: '/reports',

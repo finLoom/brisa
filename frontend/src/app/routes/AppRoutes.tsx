@@ -5,6 +5,7 @@ import { MainLayout } from '../layouts/MainLayout';
 import { Spinner, SpinnerSize } from '@fluentui/react/lib/Spinner';
 import { Stack } from '@fluentui/react/lib/Stack';
 import PeopleRoutes from '../../routes/peopleRoutes';
+import DataGridPage from '../../shared/components/data/agGrid/DataGridPage';
 
 // Simple loading fallback
 const LoadingFallback = () => (
@@ -40,7 +41,10 @@ export const AppRoutes: React.FC = () => {
             <Route path="/people/*" element={<PeopleRoutes />} />
             <Route path="/hr/*" element={<ModulePlaceholder />} />
             <Route path="/finance/*" element={<ModulePlaceholder />} />
-          </Route>
+
+          {/* ✅ Add this new route */}
+          <Route path="/data-grid" element={<DataGridPage />} />
+        </Route>
 
           {/* 404 route */}
           <Route path="*" element={<NotFound />} />

@@ -12,8 +12,8 @@ export { default as PersonDetail } from './components/PersonDetail';
 export { default as PersonForm } from './components/PersonForm';
 
 // Export hooks
-export { default as usePeopleList } from './hooks/usePeopleList';
-export { default as usePersonDetails } from './hooks/usePersonDetails';
+export { usePeopleList } from './hooks/usePeopleList';
+export { usePersonDetails } from './hooks/usePersonDetails';
 
 // Export services
 export { peopleService } from './services/peopleService';
