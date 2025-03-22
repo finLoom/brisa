@@ -13,8 +13,7 @@ interface TableBodyProps<T extends Record<string, any>> {
   onRowClick: (item: T) => void;
   onRowSelect: (item: T) => void;
   selectable: boolean;
-  onAction: (actionKey: string, item: T) => void;
-  rowActions: ActionDefinition[];
+  rowActions: ActionDefinition<T>[];
 }
 
 function TableBody<T extends Record<string, any>>({
@@ -24,7 +23,6 @@ function TableBody<T extends Record<string, any>>({
   onRowClick,
   onRowSelect,
   selectable,
-  onAction,
   rowActions
 }: TableBodyProps<T>): JSX.Element {
   const styles = useTableStyles();
@@ -60,8 +58,8 @@ function TableBody<T extends Record<string, any>>({
           {rowActions.length > 0 && (
             <td className={styles.actionCell}>
               <TableAction
+                actions={rowActions}
                 item={item}
-                onAction={(actionKey) => onAction(actionKey, item)}
               />
             </td>
           )}

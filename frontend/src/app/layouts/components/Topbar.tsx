@@ -5,14 +5,14 @@ import {
   Text,
   SearchBox,
   IconButton,
-  IContextualMenuProps,
-  Link,
+  ContextualMenu,
   DirectionalHint,
-  IIconProps
+  IContextualMenuProps
 } from '@fluentui/react';
 import { Image } from '@fluentui/react/lib/Image';
 import { useTheme } from '@fluentui/react/lib/Theme';
 import { mergeStyles } from '@fluentui/react/lib/Styling';
+import { Link } from 'react-router-dom';
 // Import SVG as a regular file path instead of a React component
 import LogoPath from './brisa.svg';
 
@@ -50,119 +50,49 @@ const Topbar: React.FC<TopbarProps> = ({ isSidebarCollapsed, onToggleSidebar }) 
     directionalHint: DirectionalHint.bottomRightEdge,
   };
 
-  // Explore dropdown items
-  const exploreMenuProps: IContextualMenuProps = {
-    items: [
-      {
-        key: 'quickStart',
-        text: 'Quick Start',
-        onClick: () => console.log('Quick Start clicked'),
-      },
-      {
-        key: 'tutorials',
-        text: 'Tutorials',
-        onClick: () => console.log('Tutorials clicked'),
-      },
-      {
-        key: 'documentation',
-        text: 'Documentation',
-        onClick: () => console.log('Documentation clicked'),
-      },
-    ],
-    directionalHint: DirectionalHint.bottomLeftEdge,
-  };
-
-  // Products dropdown items
-  const productsMenuProps: IContextualMenuProps = {
-    items: [
-      {
-        key: 'hrManagement',
-        text: 'HR Management',
-        onClick: () => console.log('HR Management clicked'),
-      },
-      {
-        key: 'financialTracking',
-        text: 'Financial Tracking',
-        onClick: () => console.log('Financial Tracking clicked'),
-      },
-      {
-        key: 'invoicing',
-        text: 'Invoicing',
-        onClick: () => console.log('Invoicing clicked'),
-      },
-      {
-        key: 'contracts',
-        text: 'Contracts',
-        onClick: () => console.log('Contracts clicked'),
-      },
-    ],
-    directionalHint: DirectionalHint.bottomLeftEdge,
-  };
-
-  // Solutions dropdown items
-  const solutionsMenuProps: IContextualMenuProps = {
-    items: [
-      {
-        key: 'itConsulting',
-        text: 'IT Consulting',
-        onClick: () => console.log('IT Consulting clicked'),
-      },
-      {
-        key: 'staffingAgencies',
-        text: 'Staffing Agencies',
-        onClick: () => console.log('Staffing Agencies clicked'),
-      },
-      {
-        key: 'professionalServices',
-        text: 'Professional Services',
-        onClick: () => console.log('Professional Services clicked'),
-      },
-    ],
-    directionalHint: DirectionalHint.bottomLeftEdge,
-  };
-
-  // Pricing dropdown items
-  const pricingMenuProps: IContextualMenuProps = {
-    items: [
-      {
-        key: 'plans',
-        text: 'Plans & Pricing',
-        onClick: () => console.log('Plans & Pricing clicked'),
-      },
-      {
-        key: 'enterprise',
-        text: 'Enterprise Solutions',
-        onClick: () => console.log('Enterprise Solutions clicked'),
-      },
-      {
-        key: 'calculator',
-        text: 'Cost Calculator',
-        onClick: () => console.log('Cost Calculator clicked'),
-      },
-    ],
-    directionalHint: DirectionalHint.bottomLeftEdge,
-  };
-
-  // Partners dropdown items
-  const partnersMenuProps: IContextualMenuProps = {
-    items: [
-      {
-        key: 'findPartner',
-        text: 'Find a Partner',
-        onClick: () => console.log('Find a Partner clicked'),
-      },
-      {
-        key: 'becomePartner',
-        text: 'Become a Partner',
-        onClick: () => console.log('Become a Partner clicked'),
-      },
-      {
-        key: 'partnerPortal',
-        text: 'Partner Portal',
-        onClick: () => console.log('Partner Portal clicked'),
-      },
-    ],
-    directionalHint: DirectionalHint.bottomLeftEdge,
+  // Dropdown menus
+  const dropdownMenus = {
+    explore: {
+      items: [
+        { key: 'quickStart', text: 'Quick Start', onClick: () => console.log('Quick Start clicked') },
+        { key: 'tutorials', text: 'Tutorials', onClick: () => console.log('Tutorials clicked') },
+        { key: 'documentation', text: 'Documentation', onClick: () => console.log('Documentation clicked') },
+      ],
+      directionalHint: DirectionalHint.bottomLeftEdge,
+    },
+    products: {
+      items: [
+        { key: 'hrManagement', text: 'HR Management', onClick: () => console.log('HR Management clicked') },
+        { key: 'financialTracking', text: 'Financial Tracking', onClick: () => console.log('Financial Tracking clicked') },
+        { key: 'invoicing', text: 'Invoicing', onClick: () => console.log('Invoicing clicked') },
+        { key: 'contracts', text: 'Contracts', onClick: () => console.log('Contracts clicked') },
+      ],
+      directionalHint: DirectionalHint.bottomLeftEdge,
+    },
+    solutions: {
+      items: [
+        { key: 'itConsulting', text: 'IT Consulting', onClick: () => console.log('IT Consulting clicked') },
+        { key: 'staffingAgencies', text: 'Staffing Agencies', onClick: () => console.log('Staffing Agencies clicked') },
+        { key: 'professionalServices', text: 'Professional Services', onClick: () => console.log('Professional Services clicked') },
+      ],
+      directionalHint: DirectionalHint.bottomLeftEdge,
+    },
+    pricing: {
+      items: [
+        { key: 'plans', text: 'Plans & Pricing', onClick: () => console.log('Plans & Pricing clicked') },
+        { key: 'enterprise', text: 'Enterprise Solutions', onClick: () => console.log('Enterprise Solutions clicked') },
+        { key: 'calculator', text: 'Cost Calculator', onClick: () => console.log('Cost Calculator clicked') },
+      ],
+      directionalHint: DirectionalHint.bottomLeftEdge,
+    },
+    partners: {
+      items: [
+        { key: 'findPartner', text: 'Find a Partner', onClick: () => console.log('Find a Partner clicked') },
+        { key: 'becomePartner', text: 'Become a Partner', onClick: () => console.log('Become a Partner clicked') },
+        { key: 'partnerPortal', text: 'Partner Portal', onClick: () => console.log('Partner Portal clicked') },
+      ],
+      directionalHint: DirectionalHint.bottomLeftEdge,
+    }
   };
 
   // Style for navigation links
@@ -175,6 +105,7 @@ const Topbar: React.FC<TopbarProps> = ({ isSidebarCollapsed, onToggleSidebar }) 
     color: theme.palette.neutralPrimary,
     textDecoration: 'none',
     position: 'relative',
+    cursor: 'pointer',
     ':hover': {
       textDecoration: 'none',
       color: theme.palette.themePrimary,
@@ -190,28 +121,50 @@ const Topbar: React.FC<TopbarProps> = ({ isSidebarCollapsed, onToggleSidebar }) 
     },
   });
 
-  // Style for dropdown links
-  const dropdownLinkStyle = mergeStyles(navLinkStyle, {
-    ':after': {
-      content: '""',
-      position: 'absolute',
-      left: '8px',
-      right: '8px',
-      bottom: '0',
-      height: '2px',
-      background: 'transparent',
-    },
-  });
+  // Dropdown menu component to avoid nested buttons
+  const DropdownLink: React.FC<{
+    text: string,
+    menuProps: IContextualMenuProps,
+    className?: string
+  }> = ({ text, menuProps, className }) => {
+    const [isMenuOpen, setIsMenuOpen] = React.useState(false);
 
-  // Menu button icon props
-  const chevronDownIcon: IIconProps = {
-    iconName: 'ChevronDown',
-    styles: {
-      root: {
-        fontSize: '10px',
-        marginLeft: '4px',
-      }
-    }
+    return (
+      <div style={{ position: 'relative', height: '100%' }}>
+        <div
+          className={className}
+          onClick={() => setIsMenuOpen(!isMenuOpen)}
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            cursor: 'pointer'
+          }}
+        >
+          {text}
+          <span style={{
+            marginLeft: '4px',
+            fontSize: '10px',
+            display: 'inline-block'
+          }}>
+            ▼
+          </span>
+        </div>
+        {isMenuOpen && (
+          <ContextualMenu
+            items={menuProps.items}
+            directionalHint={menuProps.directionalHint}
+            onItemClick={() => setIsMenuOpen(false)}
+            styles={{
+              root: {
+                position: 'absolute',
+                top: '100%',
+                left: 0
+              }
+            }}
+          />
+        )}
+      </div>
+    );
   };
 
   return (
@@ -258,141 +211,34 @@ const Topbar: React.FC<TopbarProps> = ({ isSidebarCollapsed, onToggleSidebar }) 
 
         <Image src={LogoPath} alt="Brisa Logo" height={24} />
 
-        {/* Microsoft-style flat navigation */}
-        <Stack horizontal tokens={{ childrenGap: 0 }} verticalAlign="center" styles={{ root: { height: '100%', paddingLeft: '10px' } }}>
-          {/* Explore dropdown */}
-          <Link
-            className={dropdownLinkStyle}
-            onClick={(e) => e.preventDefault()}
-            menuProps={exploreMenuProps}
-          >
-            Explore
-            <IconButton
-              iconProps={chevronDownIcon}
-              styles={{
-                root: {
-                  width: 'auto',
-                  height: 'auto',
-                  padding: 0,
-                  margin: 0,
-                  marginLeft: '4px',
-                  background: 'transparent'
-                },
-                rootHovered: { background: 'transparent' },
-                rootPressed: { background: 'transparent' },
-                icon: { fontSize: '8px' }
-              }}
+        {/* Navigation Links */}
+        <Stack
+          horizontal
+          tokens={{ childrenGap: 0 }}
+          verticalAlign="center"
+          styles={{ root: { height: '100%', paddingLeft: '10px' } }}
+        >
+          {/* Dropdown Menus */}
+          {Object.entries({
+            Explore: 'explore',
+            Products: 'products',
+            Solutions: 'solutions',
+            Pricing: 'pricing',
+            Partners: 'partners'
+          }).map(([text, key]) => (
+            <DropdownLink
+              key={key}
+              text={text}
+              menuProps={dropdownMenus[key as keyof typeof dropdownMenus]}
+              className={navLinkStyle}
             />
-          </Link>
+          ))}
 
-          {/* Products dropdown */}
+          {/* Standard Links */}
           <Link
-            className={dropdownLinkStyle}
-            onClick={(e) => e.preventDefault()}
-            menuProps={productsMenuProps}
-          >
-            Products
-            <IconButton
-              iconProps={chevronDownIcon}
-              styles={{
-                root: {
-                  width: 'auto',
-                  height: 'auto',
-                  padding: 0,
-                  margin: 0,
-                  marginLeft: '4px',
-                  background: 'transparent'
-                },
-                rootHovered: { background: 'transparent' },
-                rootPressed: { background: 'transparent' },
-                icon: { fontSize: '8px' }
-              }}
-            />
-          </Link>
-
-          {/* Solutions dropdown */}
-          <Link
-            className={dropdownLinkStyle}
-            onClick={(e) => e.preventDefault()}
-            menuProps={solutionsMenuProps}
-          >
-            Solutions
-            <IconButton
-              iconProps={chevronDownIcon}
-              styles={{
-                root: {
-                  width: 'auto',
-                  height: 'auto',
-                  padding: 0,
-                  margin: 0,
-                  marginLeft: '4px',
-                  background: 'transparent'
-                },
-                rootHovered: { background: 'transparent' },
-                rootPressed: { background: 'transparent' },
-                icon: { fontSize: '8px' }
-              }}
-            />
-          </Link>
-
-          {/* Pricing dropdown */}
-          <Link
-            className={dropdownLinkStyle}
-            onClick={(e) => e.preventDefault()}
-            menuProps={pricingMenuProps}
-          >
-            Pricing
-            <IconButton
-              iconProps={chevronDownIcon}
-              styles={{
-                root: {
-                  width: 'auto',
-                  height: 'auto',
-                  padding: 0,
-                  margin: 0,
-                  marginLeft: '4px',
-                  background: 'transparent'
-                },
-                rootHovered: { background: 'transparent' },
-                rootPressed: { background: 'transparent' },
-                icon: { fontSize: '8px' }
-              }}
-            />
-          </Link>
-
-          {/* Partners dropdown */}
-          <Link
-            className={dropdownLinkStyle}
-            onClick={(e) => e.preventDefault()}
-            menuProps={partnersMenuProps}
-          >
-            Partners
-            <IconButton
-              iconProps={chevronDownIcon}
-              styles={{
-                root: {
-                  width: 'auto',
-                  height: 'auto',
-                  padding: 0,
-                  margin: 0,
-                  marginLeft: '4px',
-                  background: 'transparent'
-                },
-                rootHovered: { background: 'transparent' },
-                rootPressed: { background: 'transparent' },
-                icon: { fontSize: '8px' }
-              }}
-            />
-          </Link>
-
-          {/* Resources link (no dropdown) */}
-          <Link
+            to="/resources"
             className={navLinkStyle}
-            href="/resources"
-            onClick={(e) => {
-              e.preventDefault();
-              console.log('Resources clicked');
-            }}
+            style={{ textDecoration: 'none', color: 'inherit' }}
           >
             Resources
           </Link>
@@ -411,8 +257,20 @@ const Topbar: React.FC<TopbarProps> = ({ isSidebarCollapsed, onToggleSidebar }) 
           }}
           iconProps={{ iconName: 'Search', styles: { root: { fontSize: '14px' } } }}
         />
-        <Link className={navLinkStyle} href="/support">Support</Link>
-        <Link className={navLinkStyle} href="/contact-sales">Contact Sales</Link>
+        <Link
+          to="/support"
+          className={navLinkStyle}
+          style={{ textDecoration: 'none', color: 'inherit' }}
+        >
+          Support
+        </Link>
+        <Link
+          to="/contact-sales"
+          className={navLinkStyle}
+          style={{ textDecoration: 'none', color: 'inherit' }}
+        >
+          Contact Sales
+        </Link>
         <IconButton
           iconProps={{ iconName: 'Contact' }}
           title="User Profile"

@@ -1,16 +1,19 @@
 // frontend/src/shared/components/data/compactTable/CompactDataTable.tsx
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useMemo } from 'react';
 import {
   Text,
-  Spinner,
-  Button
+  Spinner
 } from '@fluentui/react-components';
 import { useTableStyles } from './useTableStyles';
 import TableHeader from './TableHeader';
 import TableToolbar from './TableToolbar';
 import TableBody from './TableBody';
 import TablePagination from './TablePagination';
-import { ColumnDefinition, ActionDefinition, CompactDataTableProps } from './tableTypes';
+import {
+  ColumnDefinition,
+  ActionDefinition,
+  CompactDataTableProps
+} from './tableTypes';
 
 export function CompactDataTable<T extends Record<string, any>>({
   items = [],
@@ -18,10 +21,9 @@ export function CompactDataTable<T extends Record<string, any>>({
   isLoading = false,
   error,
   onSelect,
-  onRowClick,
-  onAction,
-  title = 'Items',
+  onRowClick = () => {},
   actions = [],
+  title = 'Items',
   emptyMessage = 'No items to display',
   selectable = true,
   hideSearch = false,
@@ -53,13 +55,18 @@ export function CompactDataTable<T extends Record<string, any>>({
 
     // Apply sorting
     if (sortColumn) {
-      result.sort((a, b) => {
-        const valA = a[sortColumn];
-        const valB = b[sortColumn];
-        return sortDirection === 'asc'
-          ? valA.localeCompare(valB)
-          : valB.localeCompare(valA);
-      });
+      const column = columns.find(col => col.key === sortColumn);
+      if (column?.sortFn) {
+        result.sort(column.sortFn);
+      } else {
+        result.sort((a, b) => {
+          const valA = a[sortColumn];
+          const valB = b[sortColumn];
+          return sortDirection === 'asc'
+            ? valA.localeCompare(valB)
+            : valB.localeCompare(valA);
+        });
+      }
     }
 
     return result;
@@ -82,11 +89,6 @@ export function CompactDataTable<T extends Record<string, any>>({
     onSelect?.(newSelectedItems);
   };
 
-  // Handle action
-  const handleAction = (actionKey: string, item?: T) => {
-    onAction?.(actionKey, item);
-  };
-
   // Handle sort
   const handleSort = (column: string) => {
     if (sortColumn === column) {
@@ -107,8 +109,7 @@ export function CompactDataTable<T extends Record<string, any>>({
         searchText={searchText}
         onSearchChange={setSearchText}
         hideSearch={hideSearch}
-        actions={actions.filter(a => a.position === 'toolbar')}
-        onAction={handleAction}
+        actions={actions.filter(a => a.position === 'toolbar' || a.position === 'header')}
         selectedItems={selectedItems}
       />
 
@@ -149,16 +150,15 @@ export function CompactDataTable<T extends Record<string, any>>({
             sortColumn={sortColumn}
             sortDirection={sortDirection}
             onSort={handleSort}
-            hasRowActions={true}
+            hasRowActions={actions.some(a => a.position === 'row')}
           />
           <TableBody
             columns={columns}
             items={paginatedItems}
             selectedItems={selectedItems}
-            onRowClick={onRowClick || (() => {})}
+            onRowClick={onRowClick}
             onRowSelect={handleRowSelect}
             selectable={selectable}
-            onAction={handleAction}
             rowActions={actions.filter(a => a.position === 'row')}
           />
         </table>

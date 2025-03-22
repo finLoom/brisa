@@ -30,7 +30,39 @@ function TableHeader<T>({
 
   return (
     <thead>
-      {/* ... (rendering logic remains the same) */}
+      <tr>
+        {/* Checkbox column for selection */}
+        {selectable && (
+          <th className={styles.selectCell}>
+            <Checkbox
+              checked={allSelected}
+              onChange={onSelectAll}
+            />
+          </th>
+        )}
+
+        {/* Data columns */}
+        {columns.map((column) => (
+          <th
+            key={column.key}
+            className={styles.tableCell}
+            style={{ cursor: column.sortable ? 'pointer' : 'default' }}
+            onClick={() => column.sortable && onSort(column.key)}
+          >
+            <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+              {column.name}
+              {column.sortable && sortColumn === column.key && (
+                sortDirection === 'asc'
+                  ? <ArrowUp24Regular />
+                  : <ArrowDown24Regular />
+              )}
+            </div>
+          </th>
+        ))}
+
+        {/* Actions column */}
+        {hasRowActions && <th className={styles.actionCell}>Actions</th>}
+      </tr>
     </thead>
   );
 }

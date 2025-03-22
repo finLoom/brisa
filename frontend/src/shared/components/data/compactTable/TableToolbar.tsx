@@ -9,8 +9,7 @@ interface TableToolbarProps<T> {
   searchText: string;
   onSearchChange: (search: string) => void;
   hideSearch: boolean;
-  actions: ActionDefinition[];
-  onAction: (actionKey: string, item?: T) => void;
+  actions: ActionDefinition<T>[];
   selectedItems: T[];
 }
 
@@ -19,7 +18,6 @@ function TableToolbar<T>({
   onSearchChange,
   hideSearch,
   actions,
-  onAction,
   selectedItems
 }: TableToolbarProps<T>): JSX.Element {
   const styles = useTableStyles();
@@ -36,18 +34,28 @@ function TableToolbar<T>({
       )}
 
       <div>
-        {actions.map(action => (
-          <Button
-            key={action.key}
-            appearance={action.primary ? 'primary' : 'subtle'}
-            icon={action.icon}
-            onClick={() => onAction(action.key)}
-            disabled={action.requireSelection && selectedItems.length === 0}
-            className={styles.actionButton}
-          >
-            {action.label}
-          </Button>
-        ))}
+        {actions.map(action => {
+          // Determine if the action should be disabled
+          const isDisabled =
+            (action.requireSelection && selectedItems.length === 0) ||
+            (action.disabled);
+
+          return (
+            <Button
+              key={action.key}
+              appearance={action.primary ? 'primary' : 'subtle'}
+              onClick={() => action.handler(selectedItems)}
+              disabled={isDisabled}
+              className={styles.actionButton}
+              // Spread icon as a prop only if it exists
+              {...(React.isValidElement(action.icon)
+                ? { icon: action.icon }
+                : {})}
+            >
+              {action.label}
+            </Button>
+          );
+        })}
       </div>
     </div>
   );

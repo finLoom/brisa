@@ -1,25 +1,29 @@
+// frontend/src/shared/components/data/compactTable/TableAction.tsx
 import React from 'react';
 import { Button } from '@fluentui/react-components';
-import { Edit24Regular, Delete24Regular } from '@fluentui/react-icons';
+import { ActionDefinition } from './tableTypes';
 
 interface TableActionProps<T> {
+  actions: ActionDefinition<T>[];
   item: T;
-  onAction: (actionKey: string, item: T) => void;
 }
 
-function TableAction<T>({ item, onAction }: TableActionProps<T>) {
+function TableAction<T>({ 
+  actions, 
+  item 
+}: TableActionProps<T>) {
   return (
     <div style={{ display: 'flex', gap: '8px' }}>
-      <Button
-        icon={<Edit24Regular />}
-        appearance="subtle"
-        onClick={() => onAction('edit', item)}
-      />
-      <Button
-        icon={<Delete24Regular />}
-        appearance="subtle"
-        onClick={() => onAction('delete', item)}
-      />
+      {actions.map(action => (
+        <Button
+          key={action.key}
+          appearance="subtle"
+          onClick={() => action.handler([item])}
+          disabled={action.disabled}
+        >
+          {action.label}
+        </Button>
+      ))}
     </div>
   );
 }
